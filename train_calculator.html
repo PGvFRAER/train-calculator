@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        input, button {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Train Calculator</h1>
+    <input type="number" id="distance" placeholder="Введите расстояние (км)">
+    <input type="number" id="weight" placeholder="Введите вес поезда (тонн)">
+    <input type="number" id="carCount" placeholder="Введите количество вагонов">
+    <button onclick="calculate()">Рассчитать</button>
+    <p id="result"></p>
+
+    <script>
+        function calculateSpecificNorm(carCount) {
+            // Пример расчета удельной нормы на основе количества вагонов
+            if (carCount <= 10) {
+                return 30.9;
+            } else if (carCount <= 20) {
+                return 28.5;
+            } else {
+                return 25.0;
+            }
+        }
+
+        function calculate() {
+            const distance = parseFloat(document.getElementById('distance').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const carCount = parseFloat(document.getElementById('carCount').value);
+
+            // Проверка на корректность ввода
+            if (isNaN(distance) || isNaN(weight) || isNaN(carCount)) {
+                document.getElementById('result').innerText = 'Ошибка ввода: проверьте данные';
+                return;
+            }
+
+            // Расчет удельной нормы
+            const specificNorm = calculateSpecificNorm(carCount);
+
+            // Основной расчет
+            const result = (distance * weight * specificNorm) / 10000;
+
+            // Вывод результата
+            document.getElementById('result').innerText = `Удельная норма: ${specificNorm}, Результат: ${result.toFixed(2)} кг`;
+        }
+    </script>
+</body>
+</html>
